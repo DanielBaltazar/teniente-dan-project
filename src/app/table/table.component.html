@@ -1,0 +1,53 @@
+<div class="card col-12">
+
+    <div class="actions">
+        <div class="buttons-bar">
+            <button type="button" (click)="activeFilter()">Activar filter</button>
+        </div>
+        <div    class="filter"
+                *ngIf=active>
+
+        </div>
+    </div>
+
+    <div class="table">
+        <p-table    [value]="dataTable"
+                [rows]="10"
+                [showCurrentPageReport]="true"
+                [totalRecords]="totalElements"
+                currentPageReportTemplate="{first} - {last} de {totalRecords} elementos"
+                [pageLinks]="10"
+                [rowsPerPageOptions]="[10,25,50]"
+                (onPage)="pageChange($event)"
+                selectionMode="single" 
+                [(selection)]="itemSelected"
+                styleClass="p-datatable-customers p-datatable-gridlines">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <ng-container *ngFor="let column of columnsTable">
+                            <th pSortableColumn="{{ column.field }}"> 
+                                {{ column.tittle}} 
+                                <p-sortIcon field="{{ column.field }}"></p-sortIcon>
+                            </th>
+                        </ng-container>
+                        <th class="tittle-actions"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr [pSelectableRow]="item">
+                        <ng-container *ngFor="let column of columnsTable">
+                            <th> {{ item[column.field] }} </th>
+                        </ng-container>
+                        <th class="content-actions">
+                            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success"></button>
+                            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
+                        </th>
+                    </tr>
+                </ng-template>
+        </p-table>
+    </div>
+
+    <div class="paginator">
+        <p-paginator [rows]="10" [totalRecords]="100"></p-paginator>
+    </div>
+</div>
